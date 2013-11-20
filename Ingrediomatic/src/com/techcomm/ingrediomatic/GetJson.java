@@ -23,7 +23,7 @@ import android.content.Intent;
 import android.os.AsyncTask;
 import android.util.Log;
 
-public class GetJson extends AsyncTask<ArrayList<String>, Void, HttpResponse> {
+public class GetJson extends AsyncTask<ArrayList<String>, Void, String> {
 	private ProgressDialog dialog;
 	private Context context;
 	
@@ -39,7 +39,7 @@ public class GetJson extends AsyncTask<ArrayList<String>, Void, HttpResponse> {
 		dialog.show();
 	}
 	@Override
-	protected HttpResponse doInBackground(ArrayList<String>... params) {
+	protected String doInBackground(ArrayList<String>... params) {
 		ArrayList<String> myList = params[0];
 		String url = "http://ec2-54-201-43-92.us-west-2.compute.amazonaws.com/scripts/getjson.php";
 		HttpParams httpparams = new BasicHttpParams();
@@ -57,45 +57,43 @@ public class GetJson extends AsyncTask<ArrayList<String>, Void, HttpResponse> {
 		}
 		try {
 			httppost.setEntity(new UrlEncodedFormEntity(nameValuePairs));
-			return httpclient.execute(httppost);
+			HttpResponse result =  httpclient.execute(httppost);
+			if (result != null) {
+				int responseCode = result.getStatusLine().getStatusCode();
+				String jsonbody = "";
+				switch (responseCode) {
+				case 200:
+					HttpEntity entity = result.getEntity();
+					if (entity != null) {
+						jsonbody = EntityUtils.toString(entity);
+						Log.d("Async", jsonbody);
+						return jsonbody;
+					}
+					else
+						Log.d("Async", "Entity Null");
+					break;
+				}
+			}
 		}
 		catch (Exception e) {
 			Log.d("Async", e.toString());
-			return null;
+			return "";
 		}
+		return "";
+		
 	}
 
 	@Override
-	protected void onPostExecute(final HttpResponse result) {
+	protected void onPostExecute(final String jsonbody) {
 		if (dialog.isShowing())
 			dialog.dismiss();
 		Log.d("Async", "Post Execute");
-		Log.d("Async", result.toString());
-		if (result != null) {
-			int responseCode = result.getStatusLine().getStatusCode();
-			String jsonbody = "";
-			switch (responseCode) {
-			case 200:
-				HttpEntity entity = result.getEntity();
-				if (entity != null) {
-					try {
-						jsonbody = EntityUtils.toString(entity);
-						Log.d("Async", jsonbody);
-						Intent i = new Intent(context, Results.class);
-						i.putExtra("json", jsonbody);
-						i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-						context.startActivity(i);
-					}
-					catch (Exception e)
-					{
-						Log.d("Async", e.toString());
-					}
-				}
-				else
-					Log.d("Async", "Entity Null");
-				break;
-			}
-		}
+		Log.d("Async", jsonbody);
+		Intent i = new Intent(context, Results.class);
+		i.putExtra("json", jsonbody);
+		i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+		context.startActivity(i);
+		
 		
 	}
 }

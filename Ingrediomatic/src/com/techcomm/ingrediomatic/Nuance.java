@@ -42,7 +42,7 @@ public class Nuance implements Vocalizer.Listener {
     
     void initializeTheVocalizer(Context appContext, Handler handler)
     {
-    	_vocalizer = (Vocalizer) _speechKit.createVocalizerWithLanguage("en_US", this, handler);
+    	_vocalizer = (Vocalizer) _speechKit.createVocalizerWithLanguage("en_UK", this, handler);
     }
     
     void speakTheString(String stringToSay, Context appContext)

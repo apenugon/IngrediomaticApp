@@ -35,7 +35,7 @@ public class Results extends Activity {
 		
 		final ArrayList<String> list = new ArrayList<String>();
 		final ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(getApplicationContext(),
-				android.R.layout.simple_dropdown_item_1line, list);
+				R.layout.listlayout, list);
 		listView.setAdapter(mAdapter); 
 		Log.d("Results", json);
 		try {

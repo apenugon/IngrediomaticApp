@@ -18,7 +18,8 @@ public class Directions extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_directions);
 		me = this;
-
+		final Nuance nuanceObject = new Nuance();
+		nuanceObject.initializeSpeechKit(getApplicationContext(), errorHandler);
 		Button readButton = (Button) findViewById(R.id.read);
 		TextView title = (TextView) findViewById(R.id.title);
 		TextView totaltime = (TextView) findViewById(R.id.totaltime);
@@ -44,7 +45,7 @@ public class Directions extends Activity {
 
 			@Override
 			public void onClick(View view) {
-				//nuanceObject.speakTheString(directions.getText().toString(), getApplicationContext());
+				nuanceObject.speakTheString(directions.getText().toString(), getApplicationContext());
 			}
 			
 		});
