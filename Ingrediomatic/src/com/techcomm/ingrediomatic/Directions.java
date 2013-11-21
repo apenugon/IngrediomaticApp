@@ -10,7 +10,6 @@ import android.widget.Button;
 import android.widget.TextView;
 
 public class Directions extends Activity {
-	Handler errorHandler;
 	static Activity me = null;
 	@Override
 	protected void onCreate(Bundle savedInstanceState)
@@ -18,10 +17,7 @@ public class Directions extends Activity {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.activity_directions);
 		me = this;
-		final Nuance nuanceObject = new Nuance();
-		nuanceObject.initializeSpeechKit(getApplicationContext(), errorHandler);
-		nuanceObject.initializeTheVocalizer(this, errorHandler);
-		Button readButton = (Button) findViewById(R.id.read);
+		
 		TextView title = (TextView) findViewById(R.id.title);
 		TextView totaltime = (TextView) findViewById(R.id.totaltime);
 		TextView preptime = (TextView) findViewById(R.id.preptime);
@@ -42,14 +38,6 @@ public class Directions extends Activity {
 			source.setText(myInfo[6]);
 		}
 		
-		readButton.setOnClickListener(new OnClickListener() {
-
-			@Override
-			public void onClick(View view) {
-				nuanceObject.speakTheString(directions.getText().toString(), getApplicationContext());
-			}
-			
-		});
 		
 	}
 }

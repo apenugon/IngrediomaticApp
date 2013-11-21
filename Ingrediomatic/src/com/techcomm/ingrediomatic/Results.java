@@ -37,7 +37,7 @@ public class Results extends Activity {
 		final ArrayAdapter<String> mAdapter = new ArrayAdapter<String>(getApplicationContext(),
 				R.layout.listlayout, list);
 		listView.setAdapter(mAdapter); 
-		Log.d("Results", json);
+		//Log.d("Results", json);
 		try {
 		final JsonParserFactory factory = JsonParserFactory.getInstance();
 		final JSONParser parser = factory.newJsonParser();
@@ -75,7 +75,7 @@ public class Results extends Activity {
 		}
 		catch (Exception e)
 		{
-			Log.d("Results", e.toString());
+			//Log.d("Results", e.toString());
 			list.add("No Results Found");
 		}
 	}
