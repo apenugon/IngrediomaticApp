@@ -35,14 +35,14 @@ public class Nuance implements Vocalizer.Listener {
     	{
     		  _speechKit = SpeechKit.initialize(appContext, NuanceAppInfo.SpeechKitAppId, NuanceAppInfo.SpeechKitServer, NuanceAppInfo.SpeechKitPort, NuanceAppInfo.SpeechKitSsl, NuanceAppInfo.SpeechKitApplicationKey);
                _speechKit.connect();
-               initializeTheVocalizer(appContext, handler);
+               //initializeTheVocalizer(appContext, handler);
     	}
     	
     }
     
     void initializeTheVocalizer(Context appContext, Handler handler)
     {
-    	_vocalizer = (Vocalizer) _speechKit.createVocalizerWithLanguage("en_UK", this, handler);
+    	_vocalizer = (Vocalizer) _speechKit.createVocalizerWithVoice("Daniel", this, handler);
     }
     
     void speakTheString(String stringToSay, Context appContext)

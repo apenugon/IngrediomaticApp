@@ -20,6 +20,7 @@ public class Directions extends Activity {
 		me = this;
 		final Nuance nuanceObject = new Nuance();
 		nuanceObject.initializeSpeechKit(getApplicationContext(), errorHandler);
+		nuanceObject.initializeTheVocalizer(this, errorHandler);
 		Button readButton = (Button) findViewById(R.id.read);
 		TextView title = (TextView) findViewById(R.id.title);
 		TextView totaltime = (TextView) findViewById(R.id.totaltime);
